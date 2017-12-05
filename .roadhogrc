@@ -1,0 +1,28 @@
+{
+  "entry": "src/index.js",
+  "theme": {
+    "@primary-color": "#5cb85c",
+    "@link-color": "#5CB85C"
+  },
+  "env": {
+    "development": {
+      "extraBabelPlugins": [
+        "dva-hmr",
+        "transform-runtime",
+        ["import", { "libraryName": "antd", "style": "css" }]
+      ]
+    },
+    "production": {
+      "extraBabelPlugins": [
+        "transform-runtime"
+      ]
+    }
+  },
+  "proxy": {
+    "/api": {
+      "target": "https://conduit.productionready.io/api",
+      "changeOrigin": true,
+      "pathRewrite": { "^/api": "" }
+    }
+  }
+}
