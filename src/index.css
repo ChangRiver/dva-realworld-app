@@ -7,6 +7,26 @@ html, body, :global(#root) {
   font-size: 16px;
 }
 
+/*****************
+*
+*  change antd default css 
+*
+*******/
+
+:global(.ant-list-vertical .ant-list-item-meta-avatar) {
+  display: block !important;
+}
+
+:global(.ant-list-vertical .ant-list-item-meta-title) {
+  margin-bottom: 0 !important;
+}
+
+:global(.ant-layout) {
+  background: #fff !important;
+}
+
+/** end **/
+
 :global(.pull_left) {
   float: left !important;
 }
@@ -19,15 +39,33 @@ html, body, :global(#root) {
   text-align: center
 }
 
+:global(.mB5) {
+  margin-bottom: 5px !important;
+}
+
 :global(.mB10) {
   margin-bottom: 10px;
 }
 
+:global(.mT20) {
+  margin-top: 20px;
+}
+ 
 :global(.container) {
   margin-left: auto;
   margin-right: auto;
   padding-left: 15px;
   padding-right: 15px;
+}
+
+:global(.footer) {
+  margin-top: 20px;
+  text-align: center;
+}
+
+:global(.footer p) {
+  margin-bottom: 0;
+  color: #868484;
 }
 
 @media (min-width: 544px) {

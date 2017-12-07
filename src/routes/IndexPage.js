@@ -1,24 +1,32 @@
 import React from 'react';
 import { connect } from 'dva';
+import { Row, Col } from 'antd';
 import styles from './IndexPage.css';
 import MainLayout from '../components/MainLayout/MainLayout';
+import ArticleList from '../components/ArticleList/ArticleList';
+import TagList from '../components/TagList/TagList';
 
-function IndexPage({ location }) {
+function IndexPage({ location, user }) {
   return (
-    <MainLayout location={location}>
-      <div className={styles.normal}>
-        <h1 className={styles.title}>Yay! Welcome to dva!</h1>
-        <div className={styles.welcome} />
-        <ul className={styles.list}>
-          <li>To get started, edit <code>src/index.js</code> and save to reload.</li>
-          <li><a href="https://github.com/dvajs/dva-docs/blob/master/v1/en-us/getting-started.md">Getting Started</a></li>
-        </ul>
+    <MainLayout location={location} user={user}>
+      <div className="container">
+        <Row gutter={16}>
+          <Col span={18}>
+            <div className="main-content mT20">
+              <ArticleList />
+            </div>
+          </Col>
+          <Col span={6}>
+            <TagList />
+          </Col>
+        </Row>
       </div>
     </MainLayout>
   );
 }
 
-IndexPage.propTypes = {
-};
-
-export default connect()(IndexPage);
+function mapStateToProps(state) {
+  const { user } = state.app;
+  return { user };
+}
+export default connect(mapStateToProps)(IndexPage);

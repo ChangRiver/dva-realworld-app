@@ -1,4 +1,4 @@
-import * as userService from '../services/app';
+import * as appService from '../services/app';
 import { routerRedux } from 'dva/router';
 
 export default {
@@ -17,7 +17,7 @@ export default {
   },
   effects: {
     *login({ payload: formData }, { call, put }) {
-      const { data } = yield call(userService.login, formData);
+      const { data } = yield call(appService.login, formData);
       // console.log('login data ', data)
       yield put({ type: 'save', payload: data })
       if(data.user) {
@@ -27,7 +27,7 @@ export default {
       }
     },
     *register({ payload: formData }, { call, put }) {
-      const { data } = yield call(userService.register, formData);
+      const { data } = yield call(appService.register, formData);
       yield put({ type: 'save', payload: data })
       if(data.user) {
         const token = data.user.token;
