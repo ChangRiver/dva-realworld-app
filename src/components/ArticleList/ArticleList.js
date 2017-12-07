@@ -23,7 +23,9 @@ const Tags = ({ tagList }) => (
 const ArticleList = ({
   dispatch,
   loading,
+  tag,
   articles,
+  tabActive,
   articlesCount,
   current
 }) => {
@@ -32,7 +34,31 @@ const ArticleList = ({
   }
 
   function onSetPage(page) {
-    dispatch({type: 'article/articlesAll', payload: page})
+    if(tabActive === 'globalFeed') {
+      dispatch({
+        type: 'article/articlesAll', 
+        payload: { 
+          page: page,
+          tabActive: tabActive
+        }
+      })
+    } else if(tabActive === 'yourFeed') {
+      dispatch({
+        type: 'article/articlesFeed', 
+        payload: { 
+          page: page,
+          tabActive: tabActive
+        }
+      })
+    } else {
+      dispatch({
+        type: 'article/articlesByTag', 
+        payload: { 
+          page: page,
+          tag: tag
+        }
+      })
+    }
   }
 
   const pagination = {
@@ -66,10 +92,12 @@ const ArticleList = ({
 };
 
 function mapStateToProps(state) {
-  const { articles, articlesCount, current } = state.article;
+  const { articles, articlesCount, current, tabActive, tag } = state.article;
   return {
     articles,
     current,
+    tabActive,
+    tag,
     articlesCount,
     loading: state.loading.models.article
   }

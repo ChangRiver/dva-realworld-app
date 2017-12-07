@@ -5,6 +5,7 @@ const token = localStorage.getItem('jwt');
 export default {
   namespace: 'app',
   state: {
+    token: null,
     user: {}
   },
   reducers: {
@@ -12,7 +13,14 @@ export default {
       return { 
         ...state, 
         ...payload,
+        token: payload.user ? payload.user.token : null,
         errors: payload.errors ? payload.errors : null
+      }
+    },
+    appLoad(state, { payload }) {
+      return {
+        ...state,
+        ...payload
       }
     }
   },
@@ -38,7 +46,7 @@ export default {
     },
     *getCurrentUser({ payload:token }, { call, put }) {
       const { data } = yield call(appService.getCurrentUser);
-      yield put({ type: 'save', payload: { user: data.user, token } })
+      yield put({ type: 'appLoad', payload: { user: data.user, token } })
     }
   },
   subscriptions: {

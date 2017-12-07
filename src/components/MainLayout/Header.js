@@ -3,8 +3,8 @@ import { Link } from 'dva/router';
 import { Menu, Icon, Avatar } from 'antd';
 import styles from './MainLayout.css';
 
-const Header = ({ location, user }) => {
-  if(!user) {
+const Header = ({ location, user, token }) => {
+  if(token === null) {
     return (
       <div className={styles.header}>
         <div className="container">
