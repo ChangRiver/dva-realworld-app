@@ -51,6 +51,10 @@ html, body, :global(#root) {
   margin-top: 20px;
 }
  
+:global(.mT50) {
+  margin-top: 50px;
+}
+
 :global(.container) {
   margin-left: auto;
   margin-right: auto;

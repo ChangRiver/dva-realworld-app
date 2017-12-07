@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'dva';
 import { List, Avatar, Icon, Tag } from 'antd';
 import styles from './ArticleList.css';
@@ -20,7 +20,7 @@ const Tags = ({ tagList }) => (
   </div>
 );
 
-const ArticleList = ({ 
+const ArticleList = ({
   dispatch,
   loading,
   articles,
@@ -40,7 +40,7 @@ const ArticleList = ({
     current: current,
     total: articlesCount,
     onChange: onSetPage
-  }
+  };
 
   return (
     <List
@@ -63,7 +63,7 @@ const ArticleList = ({
           </List.Item>
         )}/>
   )
-}
+};
 
 function mapStateToProps(state) {
   const { articles, articlesCount, current } = state.article;

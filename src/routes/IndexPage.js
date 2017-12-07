@@ -12,7 +12,7 @@ function IndexPage({ location, user }) {
       <div className="container">
         <Row gutter={16}>
           <Col span={18}>
-            <div className="main-content mT20">
+            <div className="main-content mT50">
               <ArticleList />
             </div>
           </Col>

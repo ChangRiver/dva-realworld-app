@@ -3,7 +3,7 @@ import {connect} from 'dva';
 import { Tag } from 'antd';
 
 const TagList = ({tags}) => (
-  <div className="tags-list mT20">
+  <div className="tags-list mT50">
     <h3>Popular Tags</h3>
     {
       tags.map((tag, i) => (

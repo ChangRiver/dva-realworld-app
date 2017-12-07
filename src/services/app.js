@@ -13,3 +13,9 @@ export function register(formData) {
     body: JSON.stringify({ user: formData })
   })
 }
+
+export function getCurrentUser() {
+  return request('/api/user', {
+    method: 'GET'
+  })
+}

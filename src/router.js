@@ -18,7 +18,7 @@ function RouterConfig({ history, app }) {
   return (
     <Router history={history}>
       <Switch>
-        <Route path="/" component={dynamic({
+        <Route exact path="/" component={dynamic({
           app,
           models: () => [import('./models/article')],
           component: () => import('./routes/IndexPage')

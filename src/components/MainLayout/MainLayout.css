@@ -10,6 +10,11 @@
   background: #fff;
 }
 
+.avatar {
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
 .banner {
   padding: 2rem;
   margin-bottom: 2rem;
