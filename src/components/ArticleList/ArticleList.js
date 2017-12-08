@@ -3,9 +3,9 @@ import { connect } from 'dva';
 import { List, Avatar, Icon, Tag } from 'antd';
 import styles from './ArticleList.css';
 
-const IconText = ({ type, text }) => (
-  <span>
-    <Icon type={type} style={{ marginRight: 8 }} />
+const IconText = ({ favorited, text, ...props }) => (
+  <span className={styles.heart_color}>
+    <Icon {...props} type={ favorited ? "heart" : "heart-o" } style={{ marginRight: 8, color: '#5CB85C' }} />
     { text }
   </span>
 );
@@ -61,12 +61,26 @@ const ArticleList = ({
     }
   }
 
+  function handleClick(favorited, slug , e) {
+    e.preventDefault();
+    console.log('click11122 ', e)
+    if(favorited === false) {
+      dispatch({type: 'article/favorite', payload: slug})
+    } else {
+      dispatch({type: 'article/unFavorite', payload: slug})
+    }
+  }
+
   const pagination = {
     pageSize: 10,
     current: current,
     total: articlesCount,
     onChange: onSetPage
   };
+
+  if(articles.length === 0) {
+    return <div>No articles are here...yet.</div>
+  }
 
   return (
     <List
@@ -76,7 +90,7 @@ const ArticleList = ({
         dataSource={articles}
         renderItem={item => (
           <List.Item
-            actions={[<IconText type="heart" text={ item.favoritesCount } />, <Tags tagList={ item.tagList }/>]}
+            actions={[<IconText favorited={item.favorited} text={ item.favoritesCount } onClick={handleClick.bind(this, item.favorited, item.slug)} />, <Tags tagList={ item.tagList }/>]}
           >
             <List.Item.Meta
               avatar={<Avatar src={ item.author.image } />}
@@ -93,13 +107,14 @@ const ArticleList = ({
 
 function mapStateToProps(state) {
   const { articles, articlesCount, current, tabActive, tag } = state.article;
+  const loading = state.loading.effects['article/articlesAll'] || state.loading.effects['article/articlesFeed'] || state.loading.effects['article/articlesByTag'];
   return {
     articles,
     current,
     tabActive,
     tag,
     articlesCount,
-    loading: state.loading.models.article
+    loading: loading
   }
 }
 

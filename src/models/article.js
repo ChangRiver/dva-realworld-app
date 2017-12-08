@@ -17,6 +17,21 @@ export default {
     },
     save(state, { payload }) {
       return { ...state, ...payload }
+    },
+    articleFavorite(state, { payload: { article } }) {
+      return {
+        ...state,
+        articles: state.articles.map(item => {
+          if(item.slug === article.slug) {
+            return {
+              ...article,
+              favorited: article.favorited,
+              favoritesCount: article.favoritesCount
+            }
+          }
+          return item;
+        })
+      }
     }
   },
   effects: {
@@ -47,6 +62,16 @@ export default {
           articlesCount: data.articlesCount
         }
       })
+    },
+    *favorite({ payload: slug }, { call, put }) {
+      const { data } = yield call(articleService.favorite, slug)
+      console.log('favorite ', data)
+      yield put({type: 'articleFavorite', payload: data })
+    },
+    *unFavorite({ payload: slug }, { call, put }) {
+      const { data } = yield call(articleService.unfavorite, slug)
+      console.log('unfavorite ', data)
+      yield put({type: 'articleFavorite', payload: data })
     }
   },
   subscriptions: {

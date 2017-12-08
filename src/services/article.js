@@ -25,3 +25,15 @@ export function byTag(tag, page) {
     method: 'GET'
   })
 }
+
+export function favorite(slug) {
+  return request(`/api/articles/${slug}/favorite`, {
+    method: 'POST'
+  })
+}
+
+export function unfavorite(slug) {
+  return request(`/api/articles/${slug}/favorite`, {
+    method: 'DELETE'
+  })
+}
