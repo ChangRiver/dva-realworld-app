@@ -35,10 +35,8 @@ export default {
     }
   },
   effects: {
-    *articlesAll({ payload: { page, tabActive } }, { call, put }) {
+    *articlesAll({ payload: { page, tabActive } }, { call, put, select }) {
       const { data } = yield call(articleService.all, page - 1)
-      console.log('article page ', page)
-      console.log('article data ', data)
       yield put({type: 'saveArticle', payload: { data, page, tabActive }})
     },
     *getTags({ payload }, { call, put }) {

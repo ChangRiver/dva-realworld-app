@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'dva';
 import { Layout, Spin } from 'antd';
 import Header from './Header';
 import Banner from './Banner';
@@ -31,4 +32,13 @@ const MainLayout = ({location, children, user, token, loading}) => {
   )
 }
 
-export default MainLayout;
+function mapStateToProps(state) {
+  const { user, token } = state.app;
+  return { 
+    user,
+    token,
+    loading: state.loading.models.app
+  };
+}
+
+export default connect(mapStateToProps)(MainLayout);

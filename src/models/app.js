@@ -51,11 +51,9 @@ export default {
   },
   subscriptions: {
     setup({dispatch, history}) {
-      history.listen(({ pathname }) => {
-        if(pathname === '/' && token !== null) {
-          dispatch({type: 'getCurrentUser', payload: token})
-        }
-      })
+      if(token !== null) {
+        dispatch({type: 'getCurrentUser', payload: token})
+      }
     }
   }
 }

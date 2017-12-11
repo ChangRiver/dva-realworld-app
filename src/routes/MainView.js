@@ -32,7 +32,7 @@ const MainView = ({ dispatch, loading, token, tag, tabActive }) => {
   return (
     <div className="main-content mT50">
       <Tabs activeKey={ tabActive } onChange={handleTabChange}>
-        { token !== null && <TabPane tab="YourFeed" key="yourFeed"><ArticleList /></TabPane> }
+        { (token !== null ) && <TabPane tab="YourFeed" key="yourFeed"><ArticleList /></TabPane> }
         <TabPane tab="GlobalFeed" key="globalFeed">
           <ArticleList />
         </TabPane>
@@ -44,9 +44,12 @@ const MainView = ({ dispatch, loading, token, tag, tabActive }) => {
 
 function mapStateToProps(state) {
   const { tag, tabActive } = state.article;
+  const { token } = state.app;
   return { 
+    token,
     tag, 
-    tabActive
+    tabActive,
+    loading: state.loading.models.app
   } 
 }
 

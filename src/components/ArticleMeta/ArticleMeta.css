@@ -1,0 +1,19 @@
+.date {
+  display: block;
+  color: #bbb;
+  font-size: 12px;
+}
+
+.info {
+  /*float: right;*/
+}
+
+.info a {
+  color: #fff;
+}
+
+.avatar {
+  float: left;
+  margin-right: 3px;
+  vertical-align: middle;
+}

@@ -12,7 +12,11 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 
 function RouterConfig({ history, app }) {
   const routes = [
-  
+    {
+      path: '/article/:id',
+      models: () => [import('./models/articleDetail')],
+      component: () => import('./routes/ArticleDetail/ArticleDetail')
+    }
   ];
   
   return (

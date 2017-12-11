@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
+import { Link } from 'dva/router';
 import { List, Avatar, Icon, Tag } from 'antd';
 import styles from './ArticleList.css';
 
@@ -63,7 +64,6 @@ const ArticleList = ({
 
   function handleClick(favorited, slug , e) {
     e.preventDefault();
-    console.log('click11122 ', e)
     if(favorited === false) {
       dispatch({type: 'article/favorite', payload: slug})
     } else {
@@ -97,9 +97,11 @@ const ArticleList = ({
               title={<a className={styles.username} href="https://ant.design">{item.author.username}</a>}
               description={<span className={styles.time}>{ item.createdAt.split('.')[0].split('T').join(' ') }</span>}
             />
-            <h2>{ item.title }</h2>
-            <p>{ item.description }</p>
-            <span>Read more...</span>
+            <Link to={`article/${item.slug}`} className={styles.article_link}>
+              <h2>{ item.title }</h2>
+              <p>{ item.description }</p>
+              <span>Read more...</span>
+            </Link>
           </List.Item>
         )}/>
   )

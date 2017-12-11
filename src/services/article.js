@@ -37,3 +37,15 @@ export function unfavorite(slug) {
     method: 'DELETE'
   })
 }
+
+export function articleDetail(slug) {
+  return request(`/api/articles/${slug}`, {
+    method: 'GET'
+  })
+}
+
+export function articleComments(slug) {
+  return request(`/api/articles/${slug}/comments`, {
+    method: 'GET'
+  })
+}
