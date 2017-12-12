@@ -30,10 +30,6 @@ const ArticleList = ({
   articlesCount,
   current
 }) => {
-  if(articles.length === 0) {
-    return null;
-  }
-
   function onSetPage(page) {
     if(tabActive === 'globalFeed') {
       dispatch({

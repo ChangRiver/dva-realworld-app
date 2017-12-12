@@ -19,3 +19,10 @@ export function getCurrentUser() {
     method: 'GET'
   })
 }
+
+export function updateUserInfo(formData) {
+  return request('/api/user', {
+    method: 'PUT',
+    body: JSON.stringify({ user: formData })
+  })
+}

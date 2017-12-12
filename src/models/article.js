@@ -35,6 +35,33 @@ export default {
     }
   },
   effects: {
+    *articleLoad({ payload: { page } }, { call, put, select }) {
+      const token = yield select(state => state.app.token);
+      console.log('t222 ', token);
+      if(token !== null) {
+        console.log('load yourFeed')
+        const { data } = yield call(articleService.feed, page - 1)
+        yield put({
+          type: 'saveArticle', 
+          payload: { 
+            data, 
+            page, 
+            tabActive: 'yourFeed'
+          }
+        })
+      } else {
+        const { data } = yield call(articleService.all, page - 1)
+        console.log('load globalFeed')
+        yield put({
+          type: 'saveArticle', 
+          payload: { 
+            data, 
+            page, 
+            tabActive: 'globalFeed'
+          }
+        })
+      }
+    },
     *articlesAll({ payload: { page, tabActive } }, { call, put, select }) {
       const { data } = yield call(articleService.all, page - 1)
       yield put({type: 'saveArticle', payload: { data, page, tabActive }})
@@ -76,11 +103,7 @@ export default {
     setup({dispatch, history}) {
       history.listen(({ pathname }) => {
         if(pathname === '/') {
-          if(token !== null) {
-            dispatch({type: 'articlesFeed', payload: { page: 1, tabActive: 'yourFeed' }})
-          } else {
-            dispatch({type: 'articlesAll', payload: { page: 1, tabActive: 'globalFeed' }})
-          }
+          dispatch({type: 'articleLoad', payload: { page: 1 }})
           dispatch({type: 'getTags'})
         }
       })

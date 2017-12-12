@@ -21,6 +21,10 @@ function RouterConfig({ history, app }) {
       path: '/editor',
       models: () => [import('./models/articleEditor')],
       component: () => import('./routes/ArticleEditor/ArticleEditor')
+    },
+    {
+      path: '/settings',
+      component: () => import('./routes/Settings/Settings')
     }
   ];
   
