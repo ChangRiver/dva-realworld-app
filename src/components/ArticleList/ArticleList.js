@@ -97,7 +97,7 @@ const ArticleList = ({
               title={<a className={styles.username} href="https://ant.design">{item.author.username}</a>}
               description={<span className={styles.time}>{ item.createdAt.split('.')[0].split('T').join(' ') }</span>}
             />
-            <Link to={`article/${item.slug}`} className={styles.article_link}>
+            <Link to={`/article/${item.slug}`} className={styles.article_link}>
               <h2>{ item.title }</h2>
               <p>{ item.description }</p>
               <span>Read more...</span>

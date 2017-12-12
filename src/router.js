@@ -16,6 +16,11 @@ function RouterConfig({ history, app }) {
       path: '/article/:id',
       models: () => [import('./models/articleDetail')],
       component: () => import('./routes/ArticleDetail/ArticleDetail')
+    },
+    {
+      path: '/editor',
+      models: () => [import('./models/articleEditor')],
+      component: () => import('./routes/ArticleEditor/ArticleEditor')
     }
   ];
   

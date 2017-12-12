@@ -49,3 +49,10 @@ export function articleComments(slug) {
     method: 'GET'
   })
 }
+
+export function create(article) {
+  return request(`/api/articles`, {
+    method: 'POST',
+    body: JSON.stringify({ article: article })
+  })
+}
