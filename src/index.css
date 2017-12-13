@@ -43,6 +43,10 @@ html, body, :global(#root) {
   margin-bottom: 5px !important;
 }
 
+:global(.mT10) {
+  margin-top: 10px;
+}
+
 :global(.mB10) {
   margin-bottom: 10px;
 }

@@ -56,3 +56,15 @@ export function create(article) {
     body: JSON.stringify({ article: article })
   })
 }
+
+export function byAuthor(author, page) {
+  return request(`/api/articles?author=${encode(author)}&${limit(10, page)}`, {
+    method: 'GET'
+  })
+}
+
+export function favoritedBy(author, page) {
+  return request(`/api/articles?favorited=${encode(author)}&${limit(10, page)}`, {
+    method: 'GET'
+  })
+}

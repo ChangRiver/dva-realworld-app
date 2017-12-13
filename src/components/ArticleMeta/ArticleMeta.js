@@ -5,9 +5,9 @@ import styles from './ArticleMeta.css';
 
 const ArticleMeta = ({ article }) => (
   <div className={styles.article_meta}>
-    <Avatar className={styles.avatar} src={ article.author.image } />
+    <Link to={`/profile@${article.author.username}`}><Avatar className={styles.avatar} src={ article.author.image } /></Link>
     <div className={styles.info}>
-      <a href="">{ article.author.username }</a>
+      <Link to={`/profile@${article.author.username}`}>{ article.author.username }</Link>
       <span className={styles.date}>
         {new Date(article.createdAt).toDateString()}
       </span>

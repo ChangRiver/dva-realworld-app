@@ -25,6 +25,11 @@ function RouterConfig({ history, app }) {
     {
       path: '/settings',
       component: () => import('./routes/Settings/Settings')
+    },
+    {
+      path: '/profile@:id',
+      models: () => [import('./models/profile'), import('./models/article')],
+      component: () => import('./routes/Profile/Profile')
     }
   ];
   

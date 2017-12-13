@@ -40,7 +40,7 @@ const Header = ({ location, user, token }) => {
             <Link to="/settings"><Icon type="setting"/>Settings</Link>
           </Menu.Item>
           <Menu.Item key="/profile">
-            <Link to="/profile">
+            <Link to={`/profile@${user.username}`}>
               <Avatar className={styles.avatar} size="small" src={user.image} />
               { user.username }
             </Link>

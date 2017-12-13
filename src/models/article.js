@@ -88,6 +88,29 @@ export default {
         }
       })
     },
+    *articlesByAuthor({ payload: { author, page } }, { call, put }) {
+      const { data } = yield call(articleService.byAuthor, author, page-1)
+      console.log('articles by author ', data)
+      yield put({
+        type: 'saveArticle',
+        payload: {
+          data,
+          page,
+          tabActive: 'myArticles'
+        }
+      })
+    },
+    *favoritedArticles({ payload: { author, page } }, { call, put }) {
+      const { data } = yield call(articleService.favoritedBy, author, page-1)
+      yield put({
+        type: 'saveArticle',
+        payload: {
+          data,
+          page,
+          tabActive: 'favoritedArticles'
+        }
+      })
+    },
     *favorite({ payload: slug }, { call, put }) {
       const { data } = yield call(articleService.favorite, slug)
       console.log('favorite ', data)
@@ -102,9 +125,20 @@ export default {
   subscriptions: {
     setup({dispatch, history}) {
       history.listen(({ pathname }) => {
+        const reg = /\/profile@(.+)/;
         if(pathname === '/') {
           dispatch({type: 'articleLoad', payload: { page: 1 }})
           dispatch({type: 'getTags'})
+        }
+        if(reg.test(pathname)) {
+          const author = reg.exec(pathname)[1];
+          dispatch({
+            type: 'articlesByAuthor',
+            payload: { 
+              page: 1,
+              author: author
+            }
+          })
         }
       })
     }

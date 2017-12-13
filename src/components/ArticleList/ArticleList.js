@@ -89,8 +89,8 @@ const ArticleList = ({
             actions={[<IconText favorited={item.favorited} text={ item.favoritesCount } onClick={handleClick.bind(this, item.favorited, item.slug)} />, <Tags tagList={ item.tagList }/>]}
           >
             <List.Item.Meta
-              avatar={<Avatar src={ item.author.image } />}
-              title={<a className={styles.username} href="https://ant.design">{item.author.username}</a>}
+              avatar={<Link to={`/profile@${item.author.username}`}><Avatar src={ item.author.image }/></Link>}
+              title={<Link className={styles.username} to={`/profile@${item.author.username}`}>{item.author.username}</Link>}
               description={<span className={styles.time}>{ item.createdAt.split('.')[0].split('T').join(' ') }</span>}
             />
             <Link to={`/article/${item.slug}`} className={styles.article_link}>
@@ -105,7 +105,12 @@ const ArticleList = ({
 
 function mapStateToProps(state) {
   const { articles, articlesCount, current, tabActive, tag } = state.article;
-  const loading = state.loading.effects['article/articlesAll'] || state.loading.effects['article/articlesFeed'] || state.loading.effects['article/articlesByTag'];
+  const loading = state.loading.effects['article/articlesAll'] || 
+                  state.loading.effects['article/articlesFeed'] || 
+                  state.loading.effects['article/articlesByTag'] ||
+                  state.loading.effects['article/articleLoad'] ||
+                  state.loading.effects['article/articlesByAuthor'] ||
+                  state.loading.effects['article/favoritedArticles'];
   return {
     articles,
     current,
