@@ -111,10 +111,11 @@ const Settings = ({
 
 function mapStateToProps(state) {
   const { user, errors } = state.app;
+  const loading = state.loading.effects['updateUserInfo'];
   return {
     user,
     errors,
-    loading: state.loading.models.app
+    loading
   }
 }
 export default connect(mapStateToProps)(Form.create()(Settings));

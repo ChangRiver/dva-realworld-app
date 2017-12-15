@@ -1,6 +1,6 @@
 import * as appService from '../services/app';
 import { routerRedux } from 'dva/router';
-const token = localStorage.getItem('jwt');
+import { delay } from '../utils/helper-func';
 
 export default {
   namespace: 'app',
@@ -39,7 +39,7 @@ export default {
     }
   },
   effects: {
-    *login({ payload: formData }, { call, put }) {
+    *login({ payload: formData }, { call, put, take }) {
       const { data } = yield call(appService.login, formData);
       yield put({ type: 'save', payload: data })
       if(data.user) {
@@ -48,9 +48,9 @@ export default {
         yield put(routerRedux.push('/'))
       }
     },
-    *logout({ payload }, { put }) {
-      yield put({ type: 'clearOut'})
+    *logout({ payload }, { call, put }) {
       localStorage.removeItem('jwt')
+      yield put({ type: 'clearOut'})
       yield put(routerRedux.push('/'))
     },
     *register({ payload: formData }, { call, put }) {
@@ -76,6 +76,7 @@ export default {
   },
   subscriptions: {
     setup({dispatch, history}) {
+      const token = localStorage.getItem('jwt');
       if(token !== null) {
         dispatch({type: 'getCurrentUser', payload: token})
       }

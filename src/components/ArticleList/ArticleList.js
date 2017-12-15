@@ -25,6 +25,7 @@ const ArticleList = ({
   dispatch,
   loading,
   tag,
+  author,
   articles,
   tabActive,
   articlesCount,
@@ -35,16 +36,30 @@ const ArticleList = ({
       dispatch({
         type: 'article/articlesAll', 
         payload: { 
-          page: page,
-          tabActive: tabActive
+          page: page
         }
       })
     } else if(tabActive === 'yourFeed') {
       dispatch({
         type: 'article/articlesFeed', 
         payload: { 
-          page: page,
-          tabActive: tabActive
+          page: page
+        }
+      })
+    } else if(tabActive === 'myArticles') {
+      dispatch({
+        type: 'article/articlesByAuthor',
+        payload: { 
+          page: 1,
+          author: author
+        }
+      })
+    } else if(tabActive === 'favoritedArticles') {
+      dispatch({
+        type: 'article/favoritedArticles',
+        payload: { 
+          page: 1,
+          author: author
         }
       })
     } else {
@@ -74,7 +89,7 @@ const ArticleList = ({
     onChange: onSetPage
   };
 
-  if(articles.length === 0) {
+  if(!loading && articles.length === 0) {
     return <div>No articles are here...yet.</div>
   }
 

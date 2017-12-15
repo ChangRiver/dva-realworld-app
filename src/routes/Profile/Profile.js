@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'dva';
-import { Row, Col, Button } from 'antd';
+import { Row, Col, Button, Spin } from 'antd';
 import styles from './Profile.css';
 import MainLayout from '../../components/MainLayout/MainLayout';
 import ArticleTabs from './ArticleTabs';
@@ -43,7 +43,7 @@ const Profile = ({
           <Col span={24}>
             <div className={styles.profile_page}>
               {
-                !loading &&
+                loading ? <Spin/> :
                 <div className={styles.profile_info}>
                   <img className={styles.avatar} src={profile.image} />
                   <h4 className={styles.username}>{profile.username}</h4>

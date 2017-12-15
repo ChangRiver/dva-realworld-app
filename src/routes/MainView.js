@@ -7,20 +7,23 @@ const TabPane = Tabs.TabPane;
 const MainView = ({ dispatch, loading, token, tag, tabActive }) => {
   
   function handleTabChange(key) {
+    dispatch({
+      type: "article/changeTab",
+      payload: { tabActive: key } 
+    })
+
     if(key === "globalFeed") {
       dispatch({
         type: "article/articlesAll", 
         payload: {
-          page: 1,
-          tabActive: key
+          page: 1
         }
       })
     } else if(key === "yourFeed") {
       dispatch({
         type: "article/articlesFeed",
          payload: {
-           page: 1,
-           tabActive: key
+           page: 1
          }
       })
     } 

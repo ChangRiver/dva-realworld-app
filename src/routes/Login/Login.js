@@ -22,7 +22,6 @@ const Login = ({
     e.preventDefault();
     validateFields((err, values) => {
       if(!err) {
-        // console.log('user login ', values)
         dispatch({ type: 'app/login', payload: values })
       }
     })

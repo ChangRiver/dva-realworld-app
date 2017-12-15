@@ -20,7 +20,6 @@ export default {
     },
     *follow({ payload: {username} }, { call, put }) {
       const { data } = yield call(profileService.follow, username);
-      console.log('follow2222 ', data)
       yield put({type: 'save', payload: data})
     },
     *unfollow({ payload: {username} }, { call, put }) {

@@ -7,13 +7,17 @@ const TabPane = Tabs.TabPane;
 const ArticleTabs = ({dispatch, tabActive, author}) => {
 
   function handleTabChange(key) {
+    dispatch({
+      type: "article/changeTab",
+      payload: { tabActive: key } 
+    })
+
     if(key === "myArticles") {
       dispatch({
         type: "article/articlesByAuthor", 
         payload: {
           page: 1,
-          author: author,
-          tabActive: key
+          author: author
         }
       })
     } else if(key === "favoritedArticles") {
@@ -21,8 +25,7 @@ const ArticleTabs = ({dispatch, tabActive, author}) => {
         type: "article/favoritedArticles",
          payload: {
            page: 1,
-           author: author,
-           tabActive: key
+           author: author
          }
       })
     } 
@@ -32,10 +35,10 @@ const ArticleTabs = ({dispatch, tabActive, author}) => {
     <div className="articleTabs mT10">
       <Tabs activeKey={tabActive} onChange={handleTabChange}>
         <TabPane tab="My Articles" key="myArticles">
-          <ArticleList />
+          <ArticleList author={author} />
         </TabPane>
         <TabPane tab="Favorited Articles" key="favoritedArticles">
-          <ArticleList />
+          <ArticleList author={author} />
         </TabPane>
       </Tabs>
     </div>
