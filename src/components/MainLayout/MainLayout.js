@@ -6,12 +6,14 @@ import Banner from './Banner';
 const { Footer, Content } = Layout;
 
 const MainLayout = ({location, children, user, token, loading}) => {
+  const reg = /\/article\/(.*)/;
+  const isArticleDetailPage = reg.test(location.pathname);
   return (
     <Layout>
       <Header location={location} token={token} user={user}/>
       {
         (() => {
-          if(location.pathname !== '/login' && location.pathname !== '/register') {
+          if(location.pathname !== '/login' && location.pathname !== '/register' && !isArticleDetailPage) {
             if(loading) {
               return <div className="container"><Spin /></div>
             } else {

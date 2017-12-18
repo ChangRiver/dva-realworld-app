@@ -1,5 +1,6 @@
 import * as articleService from '../services/article';
 import * as commentService from '../services/comment';
+import {routerRedux} from 'dva/router';
 
 export default {
   namespace: 'articleDetail',
@@ -33,8 +34,11 @@ export default {
     },
     *createComment({ payload: { slug, comment } }, { call, put }) {
       const { data } = yield call(commentService.create, slug, comment);
-      console.log('comment add ', data)
       yield put({type: 'addComment', payload: data})
+    },
+    *delArticle({ payload: { slug } }, { call, put }) {
+      yield call(articleService.del, slug);
+      yield put(routerRedux.push('/'))
     }
   },
   subscriptions: {
@@ -44,7 +48,7 @@ export default {
         if(pathname.match(reg)) {
           const slug = pathname.match(reg)[1];
           if(slug.length) {
-            dispatch({type: 'getDetail', payload: slug})
+            dispatch({type: 'getDetail', payload: slug});
             dispatch({type: 'getComments', payload: slug})
           }
         }

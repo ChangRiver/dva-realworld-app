@@ -17,7 +17,7 @@ function ArticleDetail({ location, loading, article, comments, user }) {
               <div className={styles.articleDetail}>
                 <div className={styles.header}>
                   <h1>{ article.title }</h1>
-                  <ArticleMeta article={article} />
+                  <ArticleMeta article={article} user={user} />
                 </div> 
                 <div className={styles.content}>
                   <div dangerouslySetInnerHTML={{ __html: article.body }}></div>

@@ -13,13 +13,13 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 function RouterConfig({ history, app }) {
   const routes = [
     {
-      path: '/article/:id',
-      models: () => [import('./models/articleDetail')],
-      component: () => import('./routes/ArticleDetail/ArticleDetail')
-    },
-    {
       path: '/editor',
       models: () => [import('./models/articleEditor')],
+      component: () => import('./routes/ArticleEditor/ArticleEditor')
+    },
+    {
+      path: '/editor/:slug',
+      models: () => [import('./models/articleEditor'), import('./models/articleDetail')],
       component: () => import('./routes/ArticleEditor/ArticleEditor')
     },
     {
@@ -48,6 +48,11 @@ function RouterConfig({ history, app }) {
         <Route path="/register" component={dynamic({
           app,
           component: () => import('./routes/Register/Register')
+        })} />
+        <Route path="/article/:id" component={dynamic({
+          app,
+          models: () => [import('./models/articleDetail')],
+          component: () => import('./routes/ArticleDetail/ArticleDetail')
         })} />
         {
           routes.map(({ path, ...dynamics }, key) => (

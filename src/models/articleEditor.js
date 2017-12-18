@@ -43,8 +43,20 @@ export default {
       yield put({type: 'unload'})
     },
     *articleCreate({ payload: article }, { call, put }) {
-      const { data } = yield call(articleService.create, article)
-      yield put({type: 'save', payload: data})
+      const { data } = yield call(articleService.create, article);
+      yield put({type: 'save', payload: data});
+      if(!data.errors) {
+        const url = `/article/${data.article.slug}`;
+        yield put(routerRedux.push(url))
+      }
+    },
+    *articleUpdateLoad({ payload }, { put, take, select }) {
+      yield take('articleDetail/getDetail/@@end');
+      const article = yield select(state => state.articleDetail.article);
+      yield put({type: 'save', payload: article})
+    },
+    *articleUpdate({ payload: article }, { put, call }) {
+      const { data } = yield call(articleService.update, article);
       if(!data.errors) {
         const url = `/article/${data.article.slug}`;
         yield put(routerRedux.push(url))
@@ -54,7 +66,8 @@ export default {
   subscriptions: {
     setup({dispatch, history}) {
       history.listen(({pathname}) => {
-        if(pathname !== '/editor') {
+        const reg = /\/editor/;
+        if(!reg.test(pathname)) {
           dispatch({type: 'pageUnload'})
         }
       })

@@ -1,6 +1,7 @@
 import request from '../utils/request';
 const encode = encodeURIComponent;
 const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`;
+const omitSlug = article => Object.assign({}, article, {slug: undefined})
 
 export function all(page) {
   return request(`/api/articles?${limit(10, page)}`, {
@@ -66,5 +67,18 @@ export function byAuthor(author, page) {
 export function favoritedBy(author, page) {
   return request(`/api/articles?favorited=${encode(author)}&${limit(10, page)}`, {
     method: 'GET'
+  })
+}
+
+export function del(slug) {
+  return request(`/api/articles/${slug}`, {
+    method: 'DELETE'
+  })
+}
+
+export function update(article) {
+  return request(`/api/articles/${article.slug}`, {
+    method: 'PUT',
+    body: JSON.stringify({ article: omitSlug(article) })
   })
 }
