@@ -2,6 +2,7 @@ import React from 'react';
 import { Router, Route, Switch, Redirect } from 'dva/router';
 import dynamic from 'dva/dynamic';
 import isAuthenticated from './utils/isAuthenticated';
+import HOC from './utils/HOC';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => isAuthenticated() ?
@@ -9,6 +10,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     <Redirect to={{pathname: '/login', state: { from: props.location }}}  />
   }/>
 );
+
+
 
 function RouterConfig({ history, app }) {
   const routes = [
@@ -32,7 +35,14 @@ function RouterConfig({ history, app }) {
       component: () => import('./routes/Profile/Profile')
     }
   ];
-  
+  const Login = dynamic({
+    app,
+    component: () => import('./routes/Login/Login'),
+  });
+  const Register = dynamic({
+    app,
+    component: () => import('./routes/Register/Register'),
+  });
   return (
     <Router history={history}>
       <Switch>
@@ -41,14 +51,8 @@ function RouterConfig({ history, app }) {
           models: () => [import('./models/article')],
           component: () => import('./routes/IndexPage')
         })} />
-        <Route path="/login" component={dynamic({
-          app,
-          component: () => import('./routes/Login/Login')
-        })} />
-        <Route path="/register" component={dynamic({
-          app,
-          component: () => import('./routes/Register/Register')
-        })} />
+        <Route path="/login" component={HOC(Login)}/>
+        <Route path="/register" component={HOC(Register)}/>
         <Route path="/article/:id" component={dynamic({
           app,
           models: () => [import('./models/articleDetail')],

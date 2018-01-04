@@ -10,8 +10,8 @@ export default {
   },
   reducers: {
     save(state, { payload }) {
-      return { 
-        ...state, 
+      return {
+        ...state,
         ...payload,
         token: payload.user ? payload.user.token : null,
         errors: payload.errors ? payload.errors : null
@@ -36,12 +36,18 @@ export default {
         token: null,
         user: {}
       }
+    },
+    pageUnload(state, {payload}) {
+      return {
+        ...state,
+        errors: null
+      }
     }
   },
   effects: {
     *login({ payload: formData }, { call, put, take }) {
       const { data } = yield call(appService.login, formData);
-      yield put({ type: 'save', payload: data })
+      yield put({ type: 'save', payload: data });
       if(data.user) {
         const token = data.user.token;
         localStorage.setItem('jwt', token);
@@ -49,13 +55,16 @@ export default {
       }
     },
     *logout({ payload }, { call, put }) {
-      localStorage.removeItem('jwt')
-      yield put({ type: 'clearOut'})
+      localStorage.removeItem('jwt');
+      yield put({ type: 'clearOut'});
       yield put(routerRedux.push('/'))
+    },
+    *unload({ payload }, { put }) {
+      yield put({type: 'pageUnload'})
     },
     *register({ payload: formData }, { call, put }) {
       const { data } = yield call(appService.register, formData);
-      yield put({ type: 'save', payload: data })
+      yield put({ type: 'save', payload: data });
       if(data.user) {
         const token = data.user.token;
         localStorage.setItem('jwt', token);
@@ -68,7 +77,7 @@ export default {
     },
     *updateUserInfo({ payload: formData }, { call, put }) {
       const { data } = yield call(appService.updateUserInfo, formData);
-      yield put({type: 'update', payload: data})
+      yield put({type: 'update', payload: data});
       if(!data.errors) {
         yield put(routerRedux.push('/'))
       }
